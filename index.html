@@ -1,0 +1,507 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Documentos para su hipoteca · Gaby Orona</title>
+<meta name="description" content="Envíe sus datos y los documentos para su hipoteca a Gaby Orona, Realtor®.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --tinta:#1E3354;      /* azul marino de Gaby */
+  --tinta-suave:#4A5C78;
+  --cobre:#A4552F;
+  --cobre-claro:#C46A3F;
+  --cobre-tinte:#FBF1EB;
+  --papel:#FFFFFF;
+  --plano:#E9EEF3;      /* fondo de plano */
+  --linea:#D6DEE7;
+  --verde:#2F7D5B;
+  --error:#B3261E;
+  --radio-hoja:28px;
+  --radio-doc:16px;
+  --radio-campo:12px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;font-family:Montserrat,Arial,Helvetica,sans-serif;color:var(--tinta);
+  background-color:var(--plano);
+  background-image:
+    linear-gradient(rgba(30,51,84,.07) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(30,51,84,.07) 1px,transparent 1px),
+    linear-gradient(rgba(30,51,84,.035) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(30,51,84,.035) 1px,transparent 1px);
+  background-size:120px 120px,120px 120px,24px 24px,24px 24px;
+  background-position:-1px -1px;
+  line-height:1.5;
+}
+img{max-width:100%}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--cobre-claro);outline-offset:3px;border-radius:6px}
+
+/* ---------- Encabezado ---------- */
+.top{display:flex;justify-content:center;padding:40px 16px 28px}
+.top img{width:230px;height:auto;display:block}
+
+/* ---------- Hoja ---------- */
+.hoja{
+  position:relative;max-width:780px;margin:0 auto;background:var(--papel);
+  border-radius:var(--radio-hoja);padding:48px 56px 40px;
+  box-shadow:0 1px 0 rgba(30,51,84,.06),0 24px 60px -28px rgba(30,51,84,.35);
+}
+.intro{max-width:56ch}
+.intro h1{font-size:30px;line-height:1.2;font-weight:800;margin:0 0 10px;letter-spacing:-.01em}
+.intro p{margin:0;font-size:16px;color:var(--tinta-suave)}
+
+.seccion{margin-top:44px}
+.seccion > h2{font-size:20px;font-weight:700;margin:0 0 18px}
+
+/* ---------- Campos ---------- */
+.campos{display:grid;grid-template-columns:1fr 1fr;gap:16px 18px}
+.campo{display:flex;flex-direction:column;gap:6px}
+.campo.ancho{grid-column:1/-1}
+.campo label{font-size:14px;font-weight:600}
+.campo input,.campo textarea{
+  font:inherit;font-size:16px;color:var(--tinta);background:#F6F8FA;
+  border:1.5px solid var(--linea);border-radius:var(--radio-campo);padding:12px 14px;
+  transition:border-color .2s,background-color .2s,box-shadow .2s;
+}
+.campo input:hover,.campo textarea:hover{border-color:#B9C5D2}
+.campo input:focus,.campo textarea:focus{outline:none;background:#fff;border-color:var(--cobre-claro);box-shadow:0 0 0 4px rgba(196,106,63,.15)}
+.campo.mal input{border-color:var(--error);background:#FFF7F6}
+.campo .aviso{font-size:13px;color:var(--error);min-height:0}
+
+/* ---------- Lista ---------- */
+.lista-cabeza{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:22px}
+.lista-cabeza h2{font-size:clamp(28px,4.4vw,40px);line-height:1.08;font-weight:800;margin:0;letter-spacing:-.02em;max-width:16ch}
+
+.avance{display:flex;align-items:center;gap:12px;flex:none;padding:10px 16px 10px 12px;border-radius:999px;background:#F3F5F8;border:1px solid var(--linea)}
+.avance svg{width:38px;height:38px;display:block}
+.avance .cuenta{font-size:14px;line-height:1.25;color:var(--tinta-suave)}
+.avance .cuenta b{display:block;font-size:17px;color:var(--tinta)}
+#relleno{transition:y .6s cubic-bezier(.2,.8,.2,1),height .6s cubic-bezier(.2,.8,.2,1)}
+
+.docs{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+.doc{
+  position:relative;border:1.5px solid var(--linea);border-radius:var(--radio-doc);background:#fff;
+  padding:18px 20px 18px 18px;transition:border-color .3s,background-color .3s,box-shadow .3s;
+}
+.doc.arrastrando{border-color:var(--cobre-claro);border-style:dashed;background:var(--cobre-tinte)}
+.doc.listo{border-color:rgba(164,85,47,.45);background:linear-gradient(0deg,#fff,#fff) padding-box,var(--cobre-tinte)}
+.doc-fila{display:grid;grid-template-columns:34px 1fr;gap:16px;align-items:start}
+.tick{width:34px;height:34px;display:block;margin-top:1px}
+.tick .caja{fill:#EEF2F6;stroke:var(--tinta);stroke-width:2.2;transition:fill .3s}
+.tick .palomita{fill:none;stroke:var(--cobre);stroke-width:3.4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:30;stroke-dashoffset:30;transition:stroke-dashoffset .45s cubic-bezier(.6,0,.2,1) .05s}
+.doc.listo .tick .caja{fill:var(--cobre-tinte)}
+.doc.listo .tick .palomita{stroke-dashoffset:0}
+.doc-texto p{margin:0}
+.doc-texto .t{font-weight:700;font-size:16.5px;line-height:1.4}
+.doc-texto .t span{font-weight:500}
+.doc-texto .s{font-size:14px;line-height:1.5;color:var(--tinta-suave);margin-top:4px}
+
+.acciones{margin:14px 0 0 50px;display:flex;flex-direction:column;gap:10px}
+.archivos{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.archivo{
+  display:grid;grid-template-columns:34px 1fr auto;gap:10px;align-items:center;
+  background:#F6F8FA;border:1px solid var(--linea);border-radius:12px;padding:8px 8px 8px 10px;
+  animation:entra .35s cubic-bezier(.2,.8,.2,1);
+}
+.archivo .ico{width:34px;height:34px;border-radius:8px;background:var(--tinta);color:#fff;font-size:10px;font-weight:700;display:grid;place-items:center;overflow:hidden}
+.archivo .ico img{width:100%;height:100%;object-fit:cover}
+.archivo .nombre{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.archivo .peso{display:block;font-size:12px;font-weight:500;color:var(--tinta-suave)}
+.quitar{border:0;background:transparent;color:var(--tinta-suave);width:36px;height:36px;border-radius:10px;font-size:22px;line-height:1;cursor:pointer}
+.quitar:hover{background:#E8EDF2;color:var(--error)}
+@keyframes entra{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+
+.subir{
+  align-self:flex-start;display:inline-flex;align-items:center;gap:10px;font:inherit;font-size:14.5px;font-weight:600;
+  color:var(--cobre);background:#fff;border:1.5px dashed rgba(164,85,47,.55);border-radius:12px;padding:10px 16px;cursor:pointer;
+  transition:background-color .2s,border-color .2s,transform .15s;
+}
+.subir:hover{background:var(--cobre-tinte);border-color:var(--cobre)}
+.subir:active{transform:scale(.98)}
+.subir svg{width:18px;height:18px;flex:none}
+.subir .pista{font-weight:500;color:var(--tinta-suave)}
+.oculto{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.nota-doc textarea{min-height:84px;resize:vertical}
+.nota-doc{margin:0}
+
+/* ---------- Casitas ---------- */
+.casa{position:absolute;width:250px;height:auto;pointer-events:none;z-index:2;filter:drop-shadow(0 18px 18px rgba(30,51,84,.18))}
+.casa-izq{left:-332px;top:-40px}
+.casa-der{right:-326px;top:-36px}
+.casa-movil{display:none}
+@media (prefers-reduced-motion:no-preference){
+  .casa{animation:flota 7s ease-in-out infinite}
+  .casa-der{animation-delay:-3.5s}
+  @keyframes flota{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+}
+
+/* ---------- Envío ---------- */
+.envio{margin-top:36px;padding-top:28px;border-top:1.5px solid var(--linea)}
+.medidor{display:flex;align-items:center;gap:12px;font-size:13.5px;color:var(--tinta-suave);margin-bottom:16px}
+.barra{flex:1;height:6px;border-radius:99px;background:#E6EBF0;overflow:hidden}
+.barra i{display:block;height:100%;width:0;background:var(--tinta);border-radius:inherit;transition:width .4s,background-color .3s}
+.medidor.lleno .barra i{background:var(--error)}
+.medidor.lleno{color:var(--error)}
+.error-envio{display:none;margin:0 0 14px;padding:12px 14px;border-radius:12px;background:#FFF2F0;color:var(--error);font-size:14.5px;font-weight:500}
+.error-envio.ver{display:block}
+.btn-enviar{
+  width:100%;font:inherit;font-size:17px;font-weight:700;color:#fff;background:var(--cobre);border:0;border-radius:14px;
+  padding:18px 20px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:12px;
+  box-shadow:0 10px 24px -12px rgba(164,85,47,.8);transition:background-color .2s,transform .15s,box-shadow .2s;
+}
+.btn-enviar:hover{background:#8F4826}
+.btn-enviar:active{transform:translateY(1px)}
+.btn-enviar[disabled]{cursor:progress;opacity:.9}
+.giro{width:20px;height:20px;border:2.5px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;display:none;animation:gira .8s linear infinite}
+.enviando .giro{display:block}
+@keyframes gira{to{transform:rotate(360deg)}}
+.ayuda{margin:14px 0 0;font-size:14px;color:var(--tinta-suave);text-align:center}
+.ayuda a{color:var(--cobre);font-weight:600;text-decoration:none}
+.ayuda a:hover{text-decoration:underline}
+
+/* ---------- Pie con Gaby ---------- */
+.gaby{
+  margin:40px -56px -40px;padding:28px 56px;border-radius:0 0 var(--radio-hoja) var(--radio-hoja);
+  background:#F3F5F8;display:grid;grid-template-columns:92px 1fr auto;gap:22px;align-items:center;
+}
+.gaby .foto{width:92px;height:115px;object-fit:cover;border-radius:14px;display:block}
+.gaby .nombre{font-size:22px;font-weight:800;color:var(--cobre-claro);margin:0;line-height:1.2}
+.gaby .rol{margin:2px 0 8px;font-size:13px;font-weight:500;letter-spacing:.12em}
+.gaby a.correo{font-size:15px;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+.gaby a.correo:hover{color:var(--cobre)}
+.gaby a.correo svg{width:18px;height:18px;color:var(--cobre)}
+.gaby .marca{text-align:center}
+.gaby .marca img{width:150px;display:block;margin:0 auto}
+.gaby .marca span{display:block;font-size:12px;margin-top:4px}
+.lema{max-width:780px;margin:22px auto 48px;padding:0 16px;text-align:center;font-size:14px;color:var(--tinta-suave)}
+.lema b{color:var(--cobre)}
+
+/* ---------- Pantalla de envío ---------- */
+.capa{position:fixed;inset:0;background:rgba(233,238,243,.88);backdrop-filter:blur(6px);display:none;place-items:center;z-index:50;padding:24px;text-align:center}
+.capa.ver{display:grid}
+.capa img{width:150px;margin:0 auto 12px;display:block}
+.capa p{margin:0;font-size:17px;font-weight:700}
+.capa small{display:block;margin-top:6px;font-size:14px;color:var(--tinta-suave)}
+
+/* ---------- Entrada (una sola vez) ---------- */
+@media (prefers-reduced-motion:no-preference){
+  .top img{animation:aparece .7s ease-out both}
+  .hoja{animation:sube .8s cubic-bezier(.2,.8,.2,1) .1s both}
+  .casa-izq,.casa-der{animation:cae .9s cubic-bezier(.3,1.4,.5,1) .7s both,flota 7s ease-in-out 1.6s infinite}
+  .casa-der{animation-delay:.9s,-1.9s}
+  @keyframes aparece{from{opacity:0}to{opacity:1}}
+  @keyframes sube{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+  @keyframes cae{from{opacity:0;transform:translateY(-28px) scale(.9)}to{opacity:1;transform:none}}
+}
+
+/* ---------- Pantallas medianas y teléfono ---------- */
+@media (max-width:1380px){
+  .casa-izq,.casa-der{display:none}
+  .casa-movil{display:block;position:static;width:120px;filter:drop-shadow(0 10px 10px rgba(30,51,84,.15));animation:none}
+  .lista-cabeza{align-items:center}
+  .lista-titulo{display:flex;align-items:center;gap:14px}
+}
+@media (max-width:720px){
+  .top{padding:24px 16px 18px}
+  .top img{width:180px}
+  .hoja{border-radius:22px;padding:28px 18px 24px;margin:0 10px}
+  .intro h1{font-size:24px}
+  .intro p{font-size:15px}
+  .seccion{margin-top:34px}
+  .campos{grid-template-columns:1fr}
+  .lista-cabeza{flex-direction:column;align-items:stretch;gap:16px}
+  .lista-titulo{justify-content:space-between}
+  .casa-movil{width:96px}
+  .avance{align-self:flex-start}
+  .doc{padding:16px 14px}
+  .doc-fila{grid-template-columns:28px 1fr;gap:12px}
+  .tick{width:28px;height:28px}
+  .doc-texto .t{font-size:15.5px}
+  .acciones{margin-left:0}
+  .subir{align-self:stretch;justify-content:center}
+  .gaby{margin:32px -18px -24px;padding:22px 18px;grid-template-columns:76px 1fr;border-radius:0 0 22px 22px}
+  .gaby .foto{width:76px;height:95px}
+  .gaby .marca{grid-column:1/-1;border-top:1px solid var(--linea);padding-top:16px}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <img src="logo-orona.png" width="230" height="87" alt="Orona Real Estate">
+</header>
+
+<form class="hoja" id="formulario" action="https://formsubmit.co/oronarealestate@gmail.com" method="POST" enctype="multipart/form-data" novalidate>
+  <!-- Configuración de FormSubmit -->
+  <input type="hidden" name="_subject" id="asunto" value="Documentos para hipoteca">
+  <input type="hidden" name="_template" value="table">
+  <input type="hidden" name="_captcha" value="false">
+  <input type="hidden" name="_next" id="siguiente" value="">
+  <input type="hidden" name="_replyto" id="responder" value="">
+  <input type="text" name="_honey" class="oculto" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+  <div class="intro">
+    <h1>Hola, soy Gaby.</h1>
+    <p>Para preparar su hipoteca necesito sus datos y los documentos de la lista. Puede subir fotos o archivos PDF; todo me llega directo a mi correo.</p>
+  </div>
+
+  <section class="seccion" aria-labelledby="t-datos">
+    <h2 id="t-datos">Sus datos</h2>
+    <div class="campos">
+      <div class="campo"><label for="nombre">Nombre</label><input id="nombre" name="Nombre" autocomplete="given-name" required><span class="aviso"></span></div>
+      <div class="campo"><label for="apellido">Apellido</label><input id="apellido" name="Apellido" autocomplete="family-name" required><span class="aviso"></span></div>
+      <div class="campo ancho"><label for="correo">Correo electrónico</label><input id="correo" name="Correo" type="email" autocomplete="email" inputmode="email" required><span class="aviso"></span></div>
+      <div class="campo ancho"><label for="direccion">Dirección</label><input id="direccion" name="Dirección" autocomplete="street-address" required><span class="aviso"></span></div>
+      <div class="campo"><label for="ciudad">Ciudad</label><input id="ciudad" name="Ciudad" autocomplete="address-level2" required><span class="aviso"></span></div>
+      <div class="campo"><label for="cp">Código postal</label><input id="cp" name="Código postal" autocomplete="postal-code" inputmode="numeric" required><span class="aviso"></span></div>
+    </div>
+  </section>
+
+  <section class="seccion" aria-labelledby="t-lista">
+    <div class="lista-cabeza">
+      <div class="lista-titulo">
+        <h2 id="t-lista">Lista de Documentos para tu Hipoteca</h2>
+        <img class="casa-movil" src="casa-1.png" alt="">
+      </div>
+      <div class="avance" aria-live="polite">
+        <svg viewBox="0 0 40 40" aria-hidden="true">
+          <defs><clipPath id="silueta"><path d="M6 18 20 6l14 12v16H6z"/></clipPath></defs>
+          <path d="M6 18 20 6l14 12v16H6z" fill="#E3E9EF"/>
+          <rect id="relleno" x="0" y="34" width="40" height="0" fill="#C46A3F" clip-path="url(#silueta)"/>
+          <path d="M3.5 19.5 20 5.5l16.5 14M6 17.5V34h28V17.5M16.5 34v-8h7v8" fill="none" stroke="#1E3354" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="cuenta"><b id="cuenta">0 de 9</b>documentos listos</span>
+      </div>
+    </div>
+
+    <ol class="docs" id="docs">
+      <li class="doc" data-corto="Identificación y permiso de trabajo">
+        <img class="casa casa-izq" src="casa-1.png" alt="">
+        <div class="doc-fila"><svg class="tick" viewBox="0 0 34 34" aria-hidden="true"><rect class="caja" x="2" y="2" width="30" height="30" rx="6"/><path class="palomita" d="M9 17.5l5.5 5.5L25.5 11"/></svg>
+          <div class="doc-texto"><p class="t">Una copia de su identificacion y permiso de trabajo (si aplica)</p></div></div>
+      </li>
+      <li class="doc" data-corto="Talones de cheque 30 días">
+        <div class="doc-fila"><svg class="tick" viewBox="0 0 34 34" aria-hidden="true"><rect class="caja" x="2" y="2" width="30" height="30" rx="6"/><path class="palomita" d="M9 17.5l5.5 5.5L25.5 11"/></svg>
+          <div class="doc-texto"><p class="t">Talones de cheque de los ultimos 30 dias</p></div></div>
+      </li>
+      <li class="doc" data-corto="Primer talón de cheque">
+        <div class="doc-fila"><svg class="tick" viewBox="0 0 34 34" aria-hidden="true"><rect class="caja" x="2" y="2" width="30" height="30" rx="6"/><path class="palomita" d="M9 17.5l5.5 5.5L25.5 11"/></svg>
+          <div class="doc-texto"><p class="t">El primer talon de cheque que recibio en su trabajo actual <span>(si ha estado ahi por menos de 2 años)</span></p></div></div>
+      </li>
+      <li class="doc" data-corto="Últimos talones 2025 y 2024">
+        <div class="doc-fila"><svg class="tick" viewBox="0 0 34 34" aria-hidden="true"><rect class="caja" x="2" y="2" width="30" height="30" rx="6"/><path class="palomita" d="M9 17.5l5.5 5.5L25.5 11"/></svg>
+          <div class="doc-texto"><p class="t">Si han estado a su empleo actual desde 2025 o antes, favor de mandarnos los ultimos talones de cheque de 2025 (y 2024 si aplica)</p></div></div>
+      </li>
+      <li class="doc" data-corto="Estados de banco 2 meses">
+        <div class="doc-fila"><svg class="tick" viewBox="0 0 34 34" aria-hidden="true"><rect class="caja" x="2" y="2" width="30" height="30" rx="6"/><path class="palomita" d="M9 17.5l5.5 5.5L25.5 11"/></svg>
+          <div class="doc-texto"><p class="t">Estados de banco de los ultimos 2 meses</p></div></div>
+      </li>
+      <li class="doc" data-corto="W2 o 1099">
+        <div class="doc-fila"><svg class="tick" viewBox="0 0 34 34" aria-hidden="true"><rect class="caja" x="2" y="2" width="30" height="30" rx="6"/><path class="palomita" d="M9 17.5l5.5 5.5L25.5 11"/></svg>
+          <div class="doc-texto"><p class="t">W2 o 1099 de los ultimos dos años</p></div></div>
+      </li>
+      <li class="doc" data-corto="Declaraciones de impuestos">
+        <div class="doc-fila"><svg class="tick" viewBox="0 0 34 34" aria-hidden="true"><rect class="caja" x="2" y="2" width="30" height="30" rx="6"/><path class="palomita" d="M9 17.5l5.5 5.5L25.5 11"/></svg>
+          <div class="doc-texto"><p class="t">Declaraciones de impuestos de los ultimos dos años, si son propietarios de negocio necesito los personales y de negocio</p></div></div>
+      </li>
+      <li class="doc" data-corto="Historial de trabajo" data-nota="Historial de trabajo (escrito)">
+        <img class="casa casa-der" src="casa-2.png" alt="">
+        <div class="doc-fila"><svg class="tick" viewBox="0 0 34 34" aria-hidden="true"><rect class="caja" x="2" y="2" width="30" height="30" rx="6"/><path class="palomita" d="M9 17.5l5.5 5.5L25.5 11"/></svg>
+          <div class="doc-texto"><p class="t">Historial de Trabajo de los Ultimos 24 meses:</p><p class="s">Si fue fuera del pais, tiene una constancia laboral que nos podria mandar? Que sea membretada, firmada, y sellada con su posicion, fechas de ingreso y salida, y salario mensual.</p></div></div>
+      </li>
+      <li class="doc" data-corto="Historial de residencia" data-nota="Historial de residencia (escrito)">
+        <div class="doc-fila"><svg class="tick" viewBox="0 0 34 34" aria-hidden="true"><rect class="caja" x="2" y="2" width="30" height="30" rx="6"/><path class="palomita" d="M9 17.5l5.5 5.5L25.5 11"/></svg>
+          <div class="doc-texto"><p class="t">Historial de Residencia de los Ultimos 24 meses:</p><p class="s">Si fue fuera del pais, me podria mandar la direccion exacta para poner en la aplicacion?</p></div></div>
+      </li>
+    </ol>
+  </section>
+
+  <div class="envio">
+    <img class="casa-movil" src="casa-2.png" alt="" style="margin:0 0 14px auto">
+    <div class="medidor" id="medidor"><span id="peso">Archivos: 0 MB de 10 MB</span><span class="barra"><i id="barra"></i></span></div>
+    <p class="error-envio" id="error" role="alert"></p>
+    <button class="btn-enviar" id="enviar" type="submit"><span class="giro" aria-hidden="true"></span><span id="txt-enviar">Enviar documentos</span></button>
+    <p class="ayuda">¿Tiene alguna pregunta o duda? Escríbame a <a href="mailto:oronarealestate@gmail.com">oronarealestate@gmail.com</a></p>
+  </div>
+
+  <div class="gaby">
+    <img class="foto" src="foto-gaby.jpg" width="92" height="115" alt="Gaby Orona">
+    <div>
+      <p class="nombre">Gaby Orona</p>
+      <p class="rol">REALTOR®</p>
+      <a class="correo" href="mailto:oronarealestate@gmail.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m4 7 8 6 8-6"/></svg>oronarealestate@gmail.com</a>
+    </div>
+    <div class="marca">
+      <img src="logo-orona.png" width="150" height="57" alt="Orona Real Estate">
+      <span>Presidio Real Estate</span>
+    </div>
+  </div>
+</form>
+
+<p class="lema"><b>No es un sueño, es un plan. Hagámoslo juntos.</b> It’s not a dream, it’s a plan. Let’s make yours happen together.</p>
+
+<div class="capa" id="capa" role="status" aria-live="assertive">
+  <div><img src="casa-1.png" alt=""><p>Enviando sus documentos…</p><small>Puede tardar un minuto. No cierre esta página.</small></div>
+</div>
+
+<script>
+(function(){
+  var LIMITE = 10 * 1024 * 1024;          // FormSubmit acepta hasta 10 MB por envío
+  var form = document.getElementById('formulario');
+  var docs = Array.prototype.slice.call(document.querySelectorAll('.doc'));
+  var cuenta = document.getElementById('cuenta');
+  var relleno = document.getElementById('relleno');
+  var errorBox = document.getElementById('error');
+  var subeIcono = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4m0 0-5 5m5-5 5 5"/><path d="M4 16v2.5A1.5 1.5 0 0 0 5.5 20h13a1.5 1.5 0 0 0 1.5-1.5V16"/></svg>';
+
+  function mb(b){ return (b/1048576).toFixed(b < 1048576*10 ? 1 : 0) + ' MB'; }
+
+  // Reduce fotos grandes para que quepan en el correo
+  function comprimir(file){
+    return new Promise(function(ok){
+      var esFoto = /^image\/(jpeg|png|webp)$/.test(file.type);
+      if(!esFoto || file.size < 900*1024 || !window.createImageBitmap){ ok(file); return; }
+      createImageBitmap(file).then(function(bmp){
+        var max = 2000, e = Math.min(1, max/Math.max(bmp.width,bmp.height));
+        var c = document.createElement('canvas'); c.width = Math.round(bmp.width*e); c.height = Math.round(bmp.height*e);
+        c.getContext('2d').drawImage(bmp,0,0,c.width,c.height);
+        c.toBlob(function(blob){
+          if(!blob || blob.size >= file.size){ ok(file); return; }
+          ok(new File([blob], file.name.replace(/\.\w+$/,'') + '.jpg', {type:'image/jpeg'}));
+        }, 'image/jpeg', 0.82);
+      }).catch(function(){ ok(file); });
+    });
+  }
+
+  docs.forEach(function(li, i){
+    var n = i + 1, corto = li.dataset.corto, cont = 0;
+    var acc = document.createElement('div'); acc.className = 'acciones';
+    var lista = document.createElement('ul'); lista.className = 'archivos';
+    var picker = document.createElement('input');
+    picker.type = 'file'; picker.multiple = true; picker.accept = 'image/*,application/pdf'; picker.className = 'oculto'; picker.tabIndex = -1;
+    picker.setAttribute('aria-hidden','true');
+    var boton = document.createElement('button'); boton.type = 'button'; boton.className = 'subir';
+    boton.innerHTML = subeIcono + '<span class="txt">Subir archivo</span> <span class="pista">foto o PDF</span>';
+    boton.setAttribute('aria-label', 'Subir archivo para: ' + corto);
+    acc.appendChild(lista);
+    if(li.dataset.nota){
+      var nota = document.createElement('div'); nota.className = 'campo nota-doc';
+      var id = 'nota' + n;
+      nota.innerHTML = '<label for="'+id+'">O escríbalo aquí</label><textarea id="'+id+'" name="'+ n + '. ' + li.dataset.nota +'" rows="3"></textarea>';
+      acc.appendChild(nota);
+      nota.querySelector('textarea').addEventListener('input', actualizar);
+    }
+    acc.appendChild(boton); acc.appendChild(picker);
+    li.appendChild(acc);
+
+    boton.addEventListener('click', function(){ picker.click(); });
+    picker.addEventListener('change', function(){ agregar(picker.files); picker.value = ''; });
+
+    function agregar(files){
+      Array.prototype.forEach.call(files, function(f){
+        if(!/^image\//.test(f.type) && f.type !== 'application/pdf'){ mostrarError('“' + f.name + '” no es una foto ni un PDF. Suba el documento en uno de esos formatos.'); return; }
+        comprimir(f).then(function(file){
+          cont++;
+          var input = document.createElement('input');
+          input.type = 'file'; input.className = 'oculto'; input.tabIndex = -1;
+          input.name = n + '. ' + corto + ' (' + cont + ')';
+          try { var dt = new DataTransfer(); dt.items.add(file); input.files = dt.files; }
+          catch(e){ mostrarError('Su navegador no permite adjuntar archivos aquí. Envíelos a oronarealestate@gmail.com.'); return; }
+          input.dataset.peso = file.size;
+          var item = document.createElement('li'); item.className = 'archivo';
+          var esPdf = file.type === 'application/pdf';
+          item.innerHTML = '<span class="ico">' + (esPdf ? 'PDF' : '') + '</span><span class="nombre"></span><button type="button" class="quitar" aria-label="Quitar archivo">×</button>';
+          item.querySelector('.nombre').innerHTML = '<span></span><span class="peso">' + mb(file.size) + '</span>';
+          item.querySelector('.nombre span').textContent = file.name;
+          if(!esPdf){ var im = new Image(); im.alt = ''; im.src = URL.createObjectURL(file); item.querySelector('.ico').appendChild(im); }
+          item.appendChild(input);
+          item.querySelector('.quitar').addEventListener('click', function(){ item.remove(); actualizar(); boton.focus(); });
+          lista.appendChild(item);
+          actualizar();
+        });
+      });
+    }
+
+    // Arrastrar y soltar (computadora)
+    ['dragenter','dragover'].forEach(function(ev){ li.addEventListener(ev, function(e){ e.preventDefault(); li.classList.add('arrastrando'); }); });
+    ['dragleave','drop'].forEach(function(ev){ li.addEventListener(ev, function(e){ e.preventDefault(); if(ev==='drop' || !li.contains(e.relatedTarget)) li.classList.remove('arrastrando'); }); });
+    li.addEventListener('drop', function(e){ if(e.dataTransfer && e.dataTransfer.files.length) agregar(e.dataTransfer.files); });
+    li._boton = boton;
+  });
+
+  function totalPeso(){
+    var t = 0; form.querySelectorAll('.archivo input[type=file]').forEach(function(i){ t += +i.dataset.peso || 0; }); return t;
+  }
+
+  function actualizar(){
+    var listos = 0;
+    docs.forEach(function(li){
+      var tiene = li.querySelectorAll('.archivo').length > 0;
+      var ta = li.querySelector('textarea'); if(ta && ta.value.trim()) tiene = true;
+      li.classList.toggle('listo', tiene);
+      var t = li._boton.querySelector('.txt'); t.textContent = li.querySelectorAll('.archivo').length ? 'Agregar otro archivo' : 'Subir archivo';
+      if(tiene) listos++;
+    });
+    cuenta.textContent = listos + ' de 9';
+    var h = 28 * listos / 9; relleno.setAttribute('y', 34 - h); relleno.setAttribute('height', h);
+    var p = totalPeso();
+    document.getElementById('peso').textContent = 'Archivos: ' + mb(p) + ' de 10 MB';
+    document.getElementById('barra').style.width = Math.min(100, p / LIMITE * 100) + '%';
+    var lleno = p > LIMITE;
+    document.getElementById('medidor').classList.toggle('lleno', lleno);
+    if(lleno) mostrarError('Los archivos suman ' + mb(p) + ' y el límite es 10 MB. Quite alguno y envíe el resto en un segundo envío.');
+    else if(errorBox.dataset.tipo === 'peso' || errorBox.dataset.tipo === 'docs') ocultarError();
+    if(lleno) errorBox.dataset.tipo = 'peso';
+  }
+
+  function mostrarError(msg){ errorBox.textContent = msg; errorBox.classList.add('ver'); errorBox.dataset.tipo = ''; }
+  function ocultarError(){ errorBox.classList.remove('ver'); errorBox.dataset.tipo = ''; }
+
+  var mensajes = { valueMissing:'Este dato es necesario.', typeMismatch:'Escriba un correo válido, por ejemplo nombre@gmail.com.' };
+  function validarCampo(input){
+    var c = input.closest('.campo'), aviso = c.querySelector('.aviso');
+    var v = input.validity, msg = '';
+    if(v.valueMissing || !input.value.trim()) msg = mensajes.valueMissing; else if(v.typeMismatch) msg = mensajes.typeMismatch;
+    c.classList.toggle('mal', !!msg); if(aviso) aviso.textContent = msg;
+    return !msg;
+  }
+  form.querySelectorAll('.campos input').forEach(function(i){
+    i.addEventListener('blur', function(){ if(i.value) validarCampo(i); });
+    i.addEventListener('input', function(){ if(i.closest('.campo').classList.contains('mal')) validarCampo(i); });
+  });
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var campos = Array.prototype.slice.call(form.querySelectorAll('.campos input'));
+    var malos = campos.filter(function(i){ return !validarCampo(i); });
+    if(malos.length){ malos[0].focus(); mostrarError('Complete sus datos antes de enviar.'); return; }
+    if(!form.querySelector('.doc.listo')){ mostrarError('Suba por lo menos un documento antes de enviar.'); errorBox.dataset.tipo = 'docs'; docs[0]._boton.focus(); return; }
+    if(totalPeso() > LIMITE){ actualizar(); return; }
+    ocultarError();
+    var nombre = form.Nombre.value.trim() + ' ' + form.Apellido.value.trim();
+    document.getElementById('asunto').value = 'Documentos para hipoteca: ' + nombre;
+    document.getElementById('responder').value = form.Correo.value.trim();
+    document.getElementById('siguiente').value = new URL('gracias.html', location.href).href;
+    var b = document.getElementById('enviar'); b.disabled = true; b.classList.add('enviando');
+    document.getElementById('txt-enviar').textContent = 'Enviando…';
+    document.getElementById('capa').classList.add('ver');
+    HTMLFormElement.prototype.submit.call(form);
+  });
+
+  // Si el navegador vuelve atrás, reactivar el botón
+  window.addEventListener('pageshow', function(){
+    var b = document.getElementById('enviar'); b.disabled = false; b.classList.remove('enviando');
+    document.getElementById('txt-enviar').textContent = 'Enviar documentos';
+    document.getElementById('capa').classList.remove('ver');
+  });
+  actualizar();
+})();
+</script>
+</body>
+</html>
