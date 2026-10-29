@@ -12,9 +12,9 @@
 :root{
   --tinta:#1E3354;      /* azul marino de Gaby */
   --tinta-suave:#4A5C78;
-  --cobre:#A4552F;
-  --cobre-claro:#C46A3F;
-  --cobre-tinte:#FBF1EB;
+  --cobre:#CE5100;
+  --cobre-claro:#CE5100;
+  --cobre-tinte:#FCEEE5;
   --papel:#FFFFFF;
   --plano:#E9EEF3;      /* fondo de plano */
   --linea:#D6DEE7;
@@ -65,7 +65,7 @@ a{color:inherit}
   transition:border-color .2s,background-color .2s,box-shadow .2s;
 }
 .campo input:hover,.campo textarea:hover{border-color:#B9C5D2}
-.campo input:focus,.campo textarea:focus{outline:none;background:#fff;border-color:var(--cobre-claro);box-shadow:0 0 0 4px rgba(196,106,63,.15)}
+.campo input:focus,.campo textarea:focus{outline:none;background:#fff;border-color:var(--cobre-claro);box-shadow:0 0 0 4px rgba(206,81,0,.15)}
 .campo.mal input{border-color:var(--error);background:#FFF7F6}
 .campo .aviso{font-size:13px;color:var(--error);min-height:0}
 
@@ -85,7 +85,7 @@ a{color:inherit}
   padding:18px 20px 18px 18px;transition:border-color .3s,background-color .3s,box-shadow .3s;
 }
 .doc.arrastrando{border-color:var(--cobre-claro);border-style:dashed;background:var(--cobre-tinte)}
-.doc.listo{border-color:rgba(164,85,47,.45);background:linear-gradient(0deg,#fff,#fff) padding-box,var(--cobre-tinte)}
+.doc.listo{border-color:rgba(206,81,0,.45);background:linear-gradient(0deg,#fff,#fff) padding-box,var(--cobre-tinte)}
 .doc-fila{display:grid;grid-template-columns:34px 1fr;gap:16px;align-items:start}
 .tick{width:34px;height:34px;display:block;margin-top:1px}
 .tick .caja{fill:#EEF2F6;stroke:var(--tinta);stroke-width:2.2;transition:fill .3s}
@@ -114,7 +114,7 @@ a{color:inherit}
 
 .subir{
   align-self:flex-start;display:inline-flex;align-items:center;gap:10px;font:inherit;font-size:14.5px;font-weight:600;
-  color:var(--cobre);background:#fff;border:1.5px dashed rgba(164,85,47,.55);border-radius:12px;padding:10px 16px;cursor:pointer;
+  color:var(--cobre);background:#fff;border:1.5px dashed rgba(206,81,0,.55);border-radius:12px;padding:10px 16px;cursor:pointer;
   transition:background-color .2s,border-color .2s,transform .15s;
 }
 .subir:hover{background:var(--cobre-tinte);border-color:var(--cobre)}
@@ -130,7 +130,7 @@ a{color:inherit}
 .doc{cursor:pointer;padding:0}
 .doc .doc-fila{padding:18px 20px 18px 18px;cursor:pointer;align-items:center}
 .doc:hover{border-color:#B9C5D2}
-.doc.listo:hover{border-color:rgba(164,85,47,.6)}
+.doc.listo:hover{border-color:rgba(206,81,0,.6)}
 .check{position:absolute;opacity:0;width:1px;height:1px}
 .doc:has(.check:focus-visible){outline:3px solid var(--cobre-claro);outline-offset:3px}
 .doc .tick{transition:transform .2s}
@@ -139,7 +139,7 @@ a{color:inherit}
 /* ---------- Zona para subir ---------- */
 .nota-archivos{margin:-8px 0 16px;color:var(--tinta-suave);font-size:15px}
 .zona{position:relative;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;
-  border:2px dashed rgba(164,85,47,.45);border-radius:20px;padding:34px 20px;background:#FCFAF8;transition:background-color .2s,border-color .2s}
+  border:2px dashed rgba(206,81,0,.45);border-radius:20px;padding:34px 20px;background:#FCFAF8;transition:background-color .2s,border-color .2s}
 .zona.arrastrando{background:var(--cobre-tinte);border-color:var(--cobre)}
 .zona-ico{width:44px;height:44px;color:var(--cobre)}
 .btn-subir{font:inherit;font-size:15.5px;font-weight:700;color:#fff;background:var(--tinta);border:0;border-radius:12px;padding:12px 22px;cursor:pointer;transition:background-color .2s,transform .15s}
@@ -173,9 +173,9 @@ a{color:inherit}
 .btn-enviar{
   width:100%;font:inherit;font-size:17px;font-weight:700;color:#fff;background:var(--cobre);border:0;border-radius:14px;
   padding:18px 20px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:12px;
-  box-shadow:0 10px 24px -12px rgba(164,85,47,.8);transition:background-color .2s,transform .15s,box-shadow .2s;
+  box-shadow:0 10px 24px -12px rgba(206,81,0,.8);transition:background-color .2s,transform .15s,box-shadow .2s;
 }
-.btn-enviar:hover{background:#8F4826}
+.btn-enviar:hover{background:#A84200}
 .btn-enviar:active{transform:translateY(1px)}
 .btn-enviar[disabled]{cursor:progress;opacity:.9}
 .giro{width:20px;height:20px;border:2.5px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;display:none;animation:gira .8s linear infinite}
@@ -295,7 +295,7 @@ a{color:inherit}
         <svg viewBox="0 0 40 40" aria-hidden="true">
           <defs><clipPath id="silueta"><path d="M6 18 20 6l14 12v16H6z"/></clipPath></defs>
           <path d="M6 18 20 6l14 12v16H6z" fill="#E3E9EF"/>
-          <rect id="relleno" x="0" y="34" width="40" height="0" fill="#C46A3F" clip-path="url(#silueta)"/>
+          <rect id="relleno" x="0" y="34" width="40" height="0" fill="#CE5100" clip-path="url(#silueta)"/>
           <path d="M3.5 19.5 20 5.5l16.5 14M6 17.5V34h28V17.5M16.5 34v-8h7v8" fill="none" stroke="#1E3354" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
         <span class="cuenta"><b id="cuenta">0 de 9</b>documentos listos</span>
